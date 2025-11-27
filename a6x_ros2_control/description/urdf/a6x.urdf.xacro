@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<robot name="a6x_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:property name="serial_port" default="/dev/ttyUSB0" />
+
+    <material name="black">
+        <color rgba="0.01 0.01 0.01 1.0" />
+    </material>
+    <material name="silver">
+        <color rgba="0.80 0.82 0.95 1.0" />
+    </material>
+    <material name="blue">
+        <color rgba="0 0 1 1" />
+    </material>
+
+    <!-- nxp_lower_body  -->
+    <xacro:include filename="$(find a6x_description)/urdf/a6x_macro.urdf.xacro" />
+    <xacro:include filename="$(find unitree_hardware)/description/ros2_control/unitree_motor.ros2_control.urdf.xacro" />
+
+    <!-- expand the robot macro to include links and joints defined in a6x_macro -->
+    <xacro:a6x_robot />
+
+    <!-- ros2_control hardware systems for motors -->
+    <xacro:unitree_ros2_control name="ShoulderYaw" serial_device="${serial_port}" device_id="0" joint_name="shoulder_yaw_joint"/>
+    <xacro:unitree_ros2_control name="ArmRoll" serial_device="${serial_port}" device_id="1" joint_name="arm_roll_joint"/>
+
+</robot>
