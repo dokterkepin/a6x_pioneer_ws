@@ -1,14 +1,16 @@
 <?xml version="1.0"?>
 <robot name="arm">
+    <material name="aquablue">
+        <color rgba="0.00784313725490196 0.8470588235294118 0.9137254901960784 1.0" />
+    </material>
+
     <link name="base_link">
         <visual>
             <geometry>
                <mesh filename="package://a6x_description/meshes/visual/base_link.STL" />
             </geometry>
             <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
-            <material name="aquablue" >
-                <color rgba="0.00784313725490196 0.8470588235294118 0.9137254901960784 1.0" />
-            </material>
+            <material name="aquablue" />
         </visual>
         <collision>
             <geometry>
@@ -39,9 +41,7 @@
                <mesh filename="package://a6x_description/meshes/visual/shoulder_link.STL" />
             </geometry>
             <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
-            <material name="aquablue" >
-                <color rgba="0.00784313725490196 0.8470588235294118 0.9137254901960784 1.0" />
-            </material>
+            <material name="aquablue" />
         </visual>
         <collision>
             <geometry>
@@ -71,10 +71,8 @@
             <geometry>
                <mesh filename="package://a6x_description/meshes/visual/arm_link.STL" />
             </geometry>
-            <material name="aquablue" >
-                <color rgba="0.00784313725490196 0.8470588235294118 0.9137254901960784 1.0" />
-            </material> 
             <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
+            <material name="aquablue" />
         </visual>
         <collision>
             <geometry>
@@ -105,9 +103,7 @@
                <mesh filename="package://a6x_description/meshes/visual/forearm_link.STL" />
             </geometry>
             <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
-            <material name="aquablue" >
-                <color rgba="0.00784313725490196 0.8470588235294118 0.9137254901960784 1.0" />
-            </material> 
+            <material name="aquablue" />
         </visual>
         <collision>
             <geometry>
@@ -138,9 +134,7 @@
               <mesh filename="package://a6x_description/meshes/visual/lower_wrist_link.STL" /> 
             </geometry>
             <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
-            <material name="aquablue" >
-                <color rgba="0.00784313725490196 0.8470588235294118 0.9137254901960784 1.0" />
-            </material> 
+            <material name="aquablue" />
         </visual>
         <collision>
             <geometry>
@@ -171,9 +165,7 @@
                <mesh filename="package://a6x_description/meshes/visual/upper_wrist_link.STL" />
             </geometry>
             <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
-            <material name="aquablue" >
-                <color rgba="0.00784313725490196 0.8470588235294118 0.9137254901960784 1.0" />
-            </material> 
+            <material name="aquablue" />
         </visual>
         <collision>
             <geometry>
@@ -204,9 +196,7 @@
                <mesh filename="package://a6x_description/meshes/visual/palm_link.STL" />
             </geometry>
             <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
-            <material name="aquablue" >
-                <color rgba="0.00784313725490196 0.8470588235294118 0.9137254901960784 1.0" />
-            </material> 
+            <material name="aquablue" />
         </visual>
         <collision>
             <geometry>
@@ -246,9 +236,7 @@
                <mesh filename="package://a6x_description/meshes/visual/left_finger_link.STL" />
             </geometry>
             <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
-            <material name="aquablue" >
-                <color rgba="0.00784313725490196 0.8470588235294118 0.9137254901960784 1.0" />
-            </material> 
+            <material name="aquablue" />
         </visual>
         <collision>
             <geometry>
@@ -271,9 +259,7 @@
                <mesh filename="package://a6x_description/meshes/visual/right_finger_link.STL" />
             </geometry>
             <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
-            <material name="aquablue" >
-                <color rgba="0.00784313725490196 0.8470588235294118 0.9137254901960784 1.0" />
-            </material> 
+            <material name="aquablue" />
         </visual>
         <collision>
             <geometry>

@@ -5,6 +5,9 @@
 <!-- =================================================================================== -->
 
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
+    <material name="aquablue">
+        <color rgba="0.00784313725490196 0.8470588235294118 0.9137254901960784 1.0" />
+    </material>
     <xacro:macro name="a6x_robot">
         <link name="base_link">
             <visual>
@@ -12,9 +15,7 @@
                 <mesh filename="package://a6x_description/meshes/visual/base_link.STL" />
                 </geometry>
                 <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
-                <material name="aquablue" >
-                    <color rgba="0.00784313725490196 0.8470588235294118 0.9137254901960784 1.0" />
-                </material>
+                <material name="aquablue" />
             </visual>
             <collision>
                 <geometry>
@@ -45,9 +46,7 @@
                 <mesh filename="package://a6x_description/meshes/visual/shoulder_link.STL" />
                 </geometry>
                 <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
-                <material name="aquablue" >
-                    <color rgba="0.00784313725490196 0.8470588235294118 0.9137254901960784 1.0" />
-                </material>
+                <material name="aquablue" />
             </visual>
             <collision>
                 <geometry>
@@ -68,7 +67,7 @@
             <parent link="shoulder_link" />
             <child link="arm_link" />
             <origin xyz="-0.037 0.000 0.060" rpy="0 0 0" />
-            <axis xyz="-1 0 0" />
+            <axis xyz="1 0 0" />
             <limit lower="-2.967" upper="0.785" effort="10" velocity="1.0" />
         </joint>
 
@@ -78,9 +77,7 @@
                 <mesh filename="package://a6x_description/meshes/visual/arm_link.STL" />
                 </geometry>
                 <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
-                <material name="aquablue" >
-                    <color rgba="0.00784313725490196 0.8470588235294118 0.9137254901960784 1.0" />
-                </material>
+                <material name="aquablue" />
             </visual>
             <collision>
                 <geometry>
@@ -96,5 +93,99 @@
                         izz="0.026001" />
             </inertial>
         </link>
+
+        <joint name="forearm_roll_joint" type="revolute">
+            <parent link="arm_link" />
+            <child link="forearm_link" />
+            <origin xyz="-0.003 -0.278 0.114" rpy="0 0 0" />
+            <axis xyz="-1 0 0" />
+            <limit lower="-5.393" upper="0.205" effort="10" velocity="1.0" />
+        </joint>
+    
+        <link name="forearm_link">
+            <visual>
+                <geometry>
+                <mesh filename="package://a6x_description/meshes/visual/forearm_link.STL" />
+                </geometry>
+                <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
+                <material name="aquablue" />
+            </visual>
+            <collision>
+                <geometry>
+                <mesh filename="package://a6x_description/meshes/visual/forearm_link.STL" />
+                </geometry>
+                <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
+            </collision>
+            <inertial>
+                <mass value="1.581202" />
+                <origin xyz="0.037295 0.060924 -0.085845" rpy="0 0 0" />
+                <inertia ixx="0.018638" ixy="0.000243" ixz="-0.000341" 
+                        iyy="0.012327" iyz="-0.007973" 
+                        izz="0.006798" />
+            </inertial>
+        </link>
+
+        <joint name="lower_wrist_roll_joint" type="revolute">
+            <parent link="forearm_link" />
+            <child link="lower_wrist" />
+            <origin xyz="0.059 0.134 -0.188" rpy="0 0 0" />
+            <axis xyz="1 0 0" />
+            <limit lower="-3.14" upper="3.14" effort="10" velocity="1.0" />
+        </joint>
+
+        <link name="lower_wrist">
+            <visual>
+                <geometry>
+                <mesh filename="package://a6x_description/meshes/visual/lower_wrist_link.STL" /> 
+                </geometry>
+                <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
+                <material name="aquablue" />
+            </visual>
+            <collision>
+                <geometry>
+                <mesh filename="package://a6x_description/meshes/visual/lower_wrist_link.STL" />
+                </geometry>
+                <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
+            </collision>
+            <inertial>
+                <mass value="0.628723" />
+                <origin xyz="0.052187 0.000876 0.000348" rpy="0 0 0" />
+                <inertia ixx="0.000438" ixy="-0.000003" ixz="0.000002" 
+                        iyy="0.000865" iyz="-0.000001" 
+                        izz="0.000550" />
+            </inertial>
+        </link>
+
+        <joint name="upper_wrist_pitch_joint" type="revolute">
+            <parent link="lower_wrist" />
+            <child link="upper_wrist" />
+            <origin xyz="0.060 0.020 0.000" rpy="0 0 0" />
+            <axis xyz="0 1 0" />
+            <limit lower="-1.57" upper="1.57" effort="10" velocity="1.0" />
+        </joint>
+
+        <link name="upper_wrist">
+            <visual>
+                <geometry>
+                <mesh filename="package://a6x_description/meshes/visual/upper_wrist_link.STL" />
+                </geometry>
+                <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
+                <material name="aquablue" />
+            </visual>
+            <collision>
+                <geometry>
+                <mesh filename="package://a6x_description/meshes/visual/upper_wrist_link.STL" />
+                </geometry>
+                <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
+            </collision>
+            <inertial>
+                <mass value="0.284324" />
+                <origin xyz="-0.000993 0.027842 0.000000" rpy="0 0 0" />
+                <inertia ixx="0.000146" ixy="0.000003" ixz="0.000000" 
+                        iyy="0.000090" iyz="0.000000" 
+                        izz="0.000141" />
+            </inertial>
+        </link>
+
     </xacro:macro>
 </robot>
