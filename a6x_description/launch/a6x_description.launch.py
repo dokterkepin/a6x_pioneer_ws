@@ -19,6 +19,10 @@ def generate_launch_description():
     pkg_path = FindPackageShare("a6x_description")
     gui = LaunchConfiguration("gui")
 
+    rviz_config_file = PathJoinSubstitution(
+        [pkg_path, "config", "rviz", "a6x_config.rviz"]
+    )
+
     urdf_file = PathJoinSubstitution([pkg_path, "urdf", "a6x.urdf"])
 
     robot_description_content = Command(["cat ", urdf_file])
@@ -43,6 +47,7 @@ def generate_launch_description():
         executable="rviz2",
         name="rviz2",
         output="log",
+        arguments=["-d", rviz_config_file],
         condition=IfCondition(gui),
     )
 

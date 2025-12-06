@@ -4,7 +4,7 @@
   <name>a6x_description</name>
   <version>0.0.0</version>
   <description>TODO: Package description</description>
-  <maintainer email="btw.sneakythief33@gmail.com">dokterkepin</maintainer>
+  <maintainer email="jiaokevinzhang@gmail.com">dokterkepin</maintainer>
   <license>TODO: License declaration</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
