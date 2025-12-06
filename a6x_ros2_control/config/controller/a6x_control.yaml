@@ -11,6 +11,9 @@ controller_manager:
 position_controller:
   ros__parameters:
     joints:
-      - shoulder_yaw_joint
+      - forearm_roll_joint
+      - lower_wrist_roll_joint
       - arm_roll_joint
+      - upper_wrist_pitch_joint
+      - shoulder_yaw_joint
     interface_name: position
