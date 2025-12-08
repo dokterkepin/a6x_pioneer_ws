@@ -1,0 +1,10 @@
+# Default initial positions for arm's ros2_control fake system
+
+initial_positions:
+  arm_roll_joint: 0
+  forearm_roll_joint: 0
+  left_finger_prismatic_joint: 0
+  lower_wrist_roll_joint: 0
+  palm_roll_joint: 0
+  shoulder_yaw_joint: 0
+  upper_wrist_pitch_joint: 0
