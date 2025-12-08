@@ -38,12 +38,13 @@ a6x_description/
 
 ## Dependencies
 
-- ROS2 (Humble or later)
+- ROS2 Humble
 - `robot_state_publisher` - Publishes robot state to TF
 - `joint_state_publisher_gui` - GUI for manual joint control
 - `rviz2` - ROS2 3D visualization tool
 - `ros2_control` - Hardware control framework (for actual robot control)
 - `unitree_hardware` - Motor control drivers
+- `Moveit` - robotic manipulation, collision checking and motion planning
 
 ## Usage
 
@@ -55,18 +56,10 @@ ros2 launch a6x_description a6x_description.launch.py
 
 This will start RViz with the A6X Pioneer robot model loaded and ready for inspection.
 
-### Load URDF Programmatically
-
-```python
-from urdf_parser_py.urdf import URDF
-
-robot = URDF.from_xml_file('urdf/a6x.urdf')
-```
-
-### Generate URDF from Xacro
+### Moveit Motion Planning & Inverse Kinematics
 
 ```bash
-xacro urdf/a6x_macro.urdf.xacro -o urdf/a6x.urdf
+ros2 ros2 launch moveit_config demo.launch.py
 ```
 
 ## Robot Specifications
@@ -104,13 +97,10 @@ Motor controller settings are defined in:
 ../a6x_ros2_control/config/controller/a6x_control.yaml
 ```
 
-## License
-
-See LICENSE file for details.
-
 ## Maintainer
 
 **常凱文** (jiaokevinzhang@gmail.com)
 
-For issues, questions, or contributions, please refer to the main project repository.
+For issues, questions, or contributions, please ask me at ERC lab 5th floor, Science and Technology Building
+National Taiwan Normal University
 
