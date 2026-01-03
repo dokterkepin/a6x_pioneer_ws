@@ -5,9 +5,10 @@
 <!-- =================================================================================== -->
 
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
-    <material name="aquablue">
-        <color rgba="0.00784313725490196 0.8470588235294118 0.9137254901960784 1.0" />
+    <material name="grey">
+        <color rgba="0.64 0.64 0.64 1.0" />
     </material>
+
     <xacro:macro name="a6x_robot">
         <link name="base_link">
             <visual>
@@ -15,7 +16,7 @@
                 <mesh filename="package://a6x_description/meshes/visual/base_link.STL" />
                 </geometry>
                 <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
-                <material name="aquablue" />
+                <material name="grey" />
             </visual>
             <collision>
                 <geometry>
@@ -24,11 +25,11 @@
                 <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
             </collision>
             <inertial>
-                <mass value="2.020908" />
-                <origin xyz="0.010364 -0.013298 0.019441" rpy="0 0 0" />
-                <inertia ixx="0.007042" ixy="-0.000717" ixz="-0.000018" 
-                        iyy="0.003221" iyz="0.000166" 
-                        izz="0.009183" />
+                <mass value="2.052381" />
+                <origin xyz="0.010773 -0.013141 0.019508" rpy="0 0 0" />
+                <inertia ixx="0.007060" ixy="-0.000705" ixz="-0.000013" 
+                        iyy="0.003238" iyz="0.000167" 
+                        izz="0.009216" />
             </inertial>
         </link>
 
@@ -46,7 +47,7 @@
                 <mesh filename="package://a6x_description/meshes/visual/shoulder_link.STL" />
                 </geometry>
                 <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
-                <material name="aquablue" />
+                <material name="grey" />
             </visual>
             <collision>
                 <geometry>
@@ -55,19 +56,19 @@
                 <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
             </collision>
             <inertial>
-                <mass value="0.367611" />
-                <origin xyz="0.000000 -0.000082 0.019648" rpy="0 0 0" />
-                <inertia ixx="0.000415" ixy="0.000000" ixz="0.000000" 
-                        iyy="0.000537" iyz="-0.000001" 
-                        izz="0.000645" />
+                <mass value="0.453182" />
+                <origin xyz="-0.012231 0.000430 0.037054" rpy="0 0 0" />
+                <inertia ixx="0.000959" ixy="0.000002" ixz="-0.000103" 
+                        iyy="0.000618" iyz="-0.000004" 
+                        izz="0.000763" />
             </inertial>
         </link>
 
         <joint name="arm_roll_joint" type="revolute">
             <parent link="shoulder_link" />
             <child link="arm_link" />
-            <origin xyz="-0.037 0.000 0.060" rpy="0 0 0" />
-            <axis xyz="1 0 0" />
+            <origin xyz="-0.039 0.000 0.070" rpy="0 0 0" />
+            <axis xyz="-1 0 0" />
             <limit lower="-2.967" upper="0.785" effort="10" velocity="1.0" />
         </joint>
 
@@ -77,7 +78,7 @@
                 <mesh filename="package://a6x_description/meshes/visual/arm_link.STL" />
                 </geometry>
                 <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
-                <material name="aquablue" />
+                <material name="grey" />
             </visual>
             <collision>
                 <geometry>
@@ -86,29 +87,29 @@
                 <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
             </collision>
             <inertial>
-                <mass value="1.783675" />
-                <origin xyz="0.035891 -0.069538 0.028493" rpy="0 0 0" />
-                <inertia ixx="0.027167" ixy="-0.000287" ixz="0.000116" 
-                        iyy="0.007550" iyz="-0.009088" 
-                        izz="0.026001" />
+                <mass value="1.691838" />
+                <origin xyz="0.031472 -0.101109 0.035700" rpy="0 0 0" />
+                <inertia ixx="0.024919" ixy="0.000300" ixz="-0.000105" 
+                        iyy="0.006756" iyz="-0.007400" 
+                        izz="0.024952" />
             </inertial>
         </link>
 
         <joint name="forearm_roll_joint" type="revolute">
             <parent link="arm_link" />
             <child link="forearm_link" />
-            <origin xyz="-0.003 -0.278 0.114" rpy="0 0 0" />
+            <origin xyz="0.000 -0.283 0.100" rpy="0 0 0" />
             <axis xyz="-1 0 0" />
-            <limit lower="-5.393" upper="0.205" effort="10" velocity="1.0" />
+            <limit lower="-5.350" upper="0.205" effort="10" velocity="1.0" />
         </joint>
-    
+        
         <link name="forearm_link">
             <visual>
                 <geometry>
                 <mesh filename="package://a6x_description/meshes/visual/forearm_link.STL" />
                 </geometry>
                 <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
-                <material name="aquablue" />
+                <material name="grey" />
             </visual>
             <collision>
                 <geometry>
@@ -117,18 +118,18 @@
                 <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
             </collision>
             <inertial>
-                <mass value="1.581202" />
-                <origin xyz="0.037295 0.060924 -0.085845" rpy="0 0 0" />
-                <inertia ixx="0.018638" ixy="0.000243" ixz="-0.000341" 
-                        iyy="0.012327" iyz="-0.007973" 
-                        izz="0.006798" />
+                <mass value="1.652648" />
+                <origin xyz="0.037370 0.063424 -0.084543" rpy="0 0 0" />
+                <inertia ixx="0.018666" ixy="0.000252" ixz="-0.000337" 
+                        iyy="0.011953" iyz="-0.008070" 
+                        izz="0.007223" />
             </inertial>
         </link>
 
         <joint name="lower_wrist_roll_joint" type="revolute">
             <parent link="forearm_link" />
             <child link="lower_wrist" />
-            <origin xyz="0.059 0.134 -0.188" rpy="0 0 0" />
+            <origin xyz="0.059 0.139 -0.185" rpy="0 0 0" />
             <axis xyz="1 0 0" />
             <limit lower="-3.14" upper="3.14" effort="10" velocity="1.0" />
         </joint>
@@ -139,7 +140,7 @@
                 <mesh filename="package://a6x_description/meshes/visual/lower_wrist_link.STL" /> 
                 </geometry>
                 <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
-                <material name="aquablue" />
+                <material name="grey" />
             </visual>
             <collision>
                 <geometry>
@@ -149,7 +150,7 @@
             </collision>
             <inertial>
                 <mass value="0.628723" />
-                <origin xyz="0.052187 0.000876 0.000348" rpy="0 0 0" />
+                <origin xyz="0.052187 0.000889 0.000348" rpy="0 0 0" />
                 <inertia ixx="0.000438" ixy="-0.000003" ixz="0.000002" 
                         iyy="0.000865" iyz="-0.000001" 
                         izz="0.000550" />
@@ -170,7 +171,7 @@
                 <mesh filename="package://a6x_description/meshes/visual/upper_wrist_link.STL" />
                 </geometry>
                 <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
-                <material name="aquablue" />
+                <material name="grey" />
             </visual>
             <collision>
                 <geometry>
@@ -179,13 +180,108 @@
                 <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
             </collision>
             <inertial>
-                <mass value="0.284324" />
-                <origin xyz="-0.000993 0.027842 0.000000" rpy="0 0 0" />
-                <inertia ixx="0.000146" ixy="0.000003" ixz="0.000000" 
-                        iyy="0.000090" iyz="0.000000" 
-                        izz="0.000141" />
+                <mass value="0.279057" />
+                <origin xyz="-0.001436 0.028250 0.000000" rpy="0 0 0" />
+                <inertia ixx="0.000143" ixy="0.000005" ixz="0.000000" 
+                        iyy="0.000087" iyz="0.000000" 
+                        izz="0.000135" />
             </inertial>
         </link>
+
+        <joint name="palm_roll_joint" type="revolute">
+            <parent link="upper_wrist" />
+            <child link="palm_link" />
+            <origin xyz="0.019 0.055 0.000" rpy="0 0 0" />
+            <axis xyz="1 0 0" />
+            <limit lower="0" upper="6.28" effort="10" velocity="1.0" />
+        </joint>
+
+        <link name="palm_link">
+            <visual>
+                <geometry>
+                <mesh filename="package://a6x_description/meshes/visual/palm_link.STL" />
+                </geometry>
+                <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
+                <material name="grey" />
+            </visual>
+            <collision>
+                <geometry>
+                <mesh filename="package://a6x_description/meshes/visual/palm_link.STL" />
+                </geometry>
+                <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
+            </collision>
+            <inertial>
+                <mass value="0.216056" />
+                <origin xyz="0.026410 0.000000 -0.008366" rpy="0 0 0" />
+                <inertia ixx="0.000145" ixy="0.000000" ixz="0.000007" 
+                        iyy="0.000080" iyz="0.000000" 
+                        izz="0.000126" />
+            </inertial>
+        </link>
+
+        <joint name="left_finger_prismatic_joint" type="prismatic">
+            <parent link="palm_link" />
+            <child link="left_finger_link" />
+            <origin xyz="0.038 -0.040 0.016" rpy="0 0 0" />
+            <axis xyz="0 -1 0" />
+            <limit lower="-0.010" upper="0.019" effort="1" velocity="4.8" />
+        </joint>
+
+        <joint name="right_finger_prismatic_joint" type="prismatic">
+            <mimic joint="left_finger_prismatic_joint" multiplier="-1" offset="0" />
+            <parent link="palm_link" />
+            <child link="right_finger_link" />
+            <origin xyz="0.038 0.040 0.016" rpy="0 0 0" />
+            <axis xyz="0 -1 0" />
+            <limit lower="-0.019" upper="0.010" effort="1" velocity="4.8" />
+        </joint>
+
+        <link name="left_finger_link">
+            <visual>
+                <geometry>
+                <mesh filename="package://a6x_description/meshes/visual/left_finger_link.STL" />
+                </geometry>
+                <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
+                <material name="grey" />
+            </visual>
+            <collision>
+                <geometry>
+                <mesh filename="package://a6x_description/meshes/visual/left_finger_link.STL" />
+                </geometry>
+                <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
+            </collision>
+            <inertial>
+                <mass value="0.111661" />
+                <origin xyz="0.036901 0.012552 -0.016199" rpy="0 0 0" />
+                <inertia ixx="0.000028" ixy="0.000012" ixz="0.000000" 
+                        iyy="0.000075" iyz="0.000000" 
+                        izz="0.000065" />
+            </inertial>
+        </link>
+
+        <link name="right_finger_link">
+            <visual>
+                <geometry>
+                <mesh filename="package://a6x_description/meshes/visual/right_finger_link.STL" />
+                </geometry>
+                <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
+                <material name="grey" />
+            </visual>
+            <collision>
+                <geometry>
+                <mesh filename="package://a6x_description/meshes/visual/right_finger_link.STL" />
+                </geometry>
+                <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
+            </collision>
+                    <inertial>
+                <mass value="0.111661" />
+                <origin xyz="0.036898 -0.012549 -0.016201" rpy="0 0 0" />
+                <inertia ixx="0.000028" ixy="-0.000012" ixz="0.000000" 
+                        iyy="0.000075" iyz="0.000000" 
+                        izz="0.000065" />
+            </inertial>
+        </link>
+
 
     </xacro:macro>
 </robot>

@@ -1,6 +1,6 @@
 controller_manager:
   ros__parameters:
-    update_rate: 50 # Hz
+    update_rate: 200 # Hz
 
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
@@ -16,4 +16,6 @@ position_controller:
       - arm_roll_joint
       - upper_wrist_pitch_joint
       - shoulder_yaw_joint
+      - palm_roll_joint
+      - left_finger_prismatic_joint
     interface_name: position
