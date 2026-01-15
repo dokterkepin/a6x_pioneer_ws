@@ -9,6 +9,8 @@ moveit_simple_controller_manager:
 
   arm_controller:
     type: FollowJointTrajectory
+    action_ns: follow_joint_trajectory
+    default: true
     joints:
       - shoulder_yaw_joint
       - arm_roll_joint
@@ -16,12 +18,10 @@ moveit_simple_controller_manager:
       - lower_wrist_roll_joint
       - upper_wrist_pitch_joint
       - palm_roll_joint
-    action_ns: follow_joint_trajectory
-    defaulut: true
       
   finger_controller:
     type: GripperCommand
-    joints:
-      - left_finger_prismatic_joint
     action_ns: gripper_cmd
     default: true
+    joints:
+      - left_finger_prismatic_joint

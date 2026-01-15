@@ -1,4 +1,4 @@
-# Default initial positions for arm's ros2_control fake system
+# Default initial positions for a6x_robot's ros2_control fake system
 
 initial_positions:
   arm_roll_joint: 0

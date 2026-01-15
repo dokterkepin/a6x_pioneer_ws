@@ -19,7 +19,7 @@ Copyright (c) 2024 Naoki Takahashi
       <collision>
         <origin rpy="0 0 0" xyz="0 0 0.008"/>
         <geometry>
-          <cylinder length="0.035" radius="0.042"/>
+          <cylinder length="0.035" radius="0.042"/>>
         </geometry>
       </collision>
       <!-- TODO
@@ -32,7 +32,7 @@ Copyright (c) 2024 Naoki Takahashi
     <joint name="${name}_table_joint" type="revolute">
       <origin rpy="0 0 0" xyz="0 0 0.028"/>
       <parent link="${name}_cybergear_link"/>
-      <child link="${name}_cybergear_table_link"/>
+      <child link="${name}_cybergear_table_link"/>>
       <axis xyz="0 0 1"/>
       <limit effort="12" velocity="30" lower="-12.565" upper="12.565"/>
     </joint>

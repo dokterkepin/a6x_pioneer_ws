@@ -10,36 +10,36 @@ default_acceleration_scaling_factor: 0.1
 joint_limits:
   arm_roll_joint:
     has_velocity_limits: true
-    max_velocity: 1.0
+    max_velocity: 4.796164779
     has_acceleration_limits: true
-    max_acceleration: 1.0
+    max_acceleration: 18.7253757
   forearm_roll_joint:
     has_velocity_limits: true
-    max_velocity: 1.0
+    max_velocity: 4.796164779
     has_acceleration_limits: true
-    max_acceleration: 1.0
+    max_acceleration: 18.7253757
   left_finger_prismatic_joint:
     has_velocity_limits: true
-    max_velocity: 0.050000000000000003
+    max_velocity: 4.7999999999999998
     has_acceleration_limits: true
-    max_acceleration: 1.0
+    max_acceleration: 18.7253757
   lower_wrist_roll_joint:
     has_velocity_limits: true
-    max_velocity: 1.0
+    max_velocity: 4.796164779
     has_acceleration_limits: true
-    max_acceleration: 1.0
+    max_acceleration: 18.7253757
   palm_roll_joint:
     has_velocity_limits: true
-    max_velocity: 1.0
+    max_velocity: 4.796164779
     has_acceleration_limits: true
-    max_acceleration: 1.0
+    max_acceleration: 18.7253757
   shoulder_yaw_joint:
     has_velocity_limits: true
-    max_velocity: 1.0
+    max_velocity: 4.796164779
     has_acceleration_limits: true
-    max_acceleration: 1.0
+    max_acceleration: 18.7253757
   upper_wrist_pitch_joint:
     has_velocity_limits: true
-    max_velocity: 1.0
+    max_velocity: 4.796164779
     has_acceleration_limits: true
-    max_acceleration: 1.0
+    max_acceleration: 18.7253757

@@ -61,11 +61,21 @@ def generate_launch_description():
         output="both",
     )
 
-    controller_spawner = Node(
+    arm_controller_spawner = Node(
         package="controller_manager",
         executable="spawner",
         arguments=[
-            "position_controller",
+            "arm_controller",
+            "--param-file",
+            robot_controllers,
+        ],
+    )
+    
+    finger_controller_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=[
+            "finger_controller",
             "--param-file",
             robot_controllers,
         ],
@@ -92,18 +102,26 @@ def generate_launch_description():
         arguments=["joint_state_broadcaster"],
     )
 
-    # Delay start of joint_state_broadcaster after `controller`
-    delay_joint_state_broadcaster_after_controller_spawner = RegisterEventHandler(
+    # Delay start of joint_state_broadcaster after arm_controller
+    delay_joint_state_broadcaster_after_arm_controller = RegisterEventHandler(
         event_handler=OnProcessExit(
-            target_action=controller_spawner,
+            target_action=arm_controller_spawner,
             on_exit=[joint_state_broadcaster_spawner],
         )
     )
-
-    # Delay rviz start after `joint_state_broadcaster`
-    delay_rviz_after_joint_state_broadcaster_spawner = RegisterEventHandler(
+    
+    # Delay finger_controller after joint_state_broadcaster
+    delay_finger_controller_after_joint_state_broadcaster = RegisterEventHandler(
         event_handler=OnProcessExit(
             target_action=joint_state_broadcaster_spawner,
+            on_exit=[finger_controller_spawner],
+        )
+    )
+
+    # Delay rviz start after finger_controller
+    delay_rviz_after_finger_controller = RegisterEventHandler(
+        event_handler=OnProcessExit(
+            target_action=finger_controller_spawner,
             on_exit=[rviz_node],
         )
     )
@@ -111,9 +129,10 @@ def generate_launch_description():
     nodes = [
         control_node,
         robot_state_pub_node,
-        controller_spawner,
-        delay_joint_state_broadcaster_after_controller_spawner,
-        delay_rviz_after_joint_state_broadcaster_spawner,
+        arm_controller_spawner,
+        delay_joint_state_broadcaster_after_arm_controller,
+        delay_finger_controller_after_joint_state_broadcaster,
+        delay_rviz_after_finger_controller,
     ]
 
     return LaunchDescription(declared_arguments + nodes)

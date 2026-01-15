@@ -3,11 +3,11 @@ moveit_setup_assistant_config:
     package: a6x_description
     relative_path: urdf/a6x.urdf
   srdf:
-    relative_path: config/arm.srdf
+    relative_path: config/a6x_robot.srdf
   package_settings:
-    author_name: KEVIN
+    author_name: dokterkepin
     author_email: jiaokevinzhang@gmail.com
-    generated_timestamp: 1765035953
+    generated_timestamp: 1767587665
   control_xacro:
     command:
       - position

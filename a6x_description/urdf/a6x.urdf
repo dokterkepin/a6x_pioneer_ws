@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<robot name="arm">
+<robot name="a6x_robot">
     <material name="grey">
         <color rgba="0.64 0.64 0.64 1.0" />
     </material>
@@ -62,8 +62,8 @@
         <parent link="shoulder_link" />
         <child link="arm_link" />
         <origin xyz="-0.039 0.000 0.070" rpy="0 0 0" />
-        <axis xyz="1 0 0" />
-        <limit lower="-2.967" upper="0.785" effort="10" velocity="1.0" />
+        <axis xyz="-1 0 0" />
+        <limit lower="-0.785" upper="2.967" effort="10" velocity="1.0" />
     </joint>
 
     <link name="arm_link">
@@ -93,8 +93,8 @@
         <parent link="arm_link" />
         <child link="forearm_link" />
         <origin xyz="0.000 -0.283 0.100" rpy="0 0 0" />
-        <axis xyz="1 0 0" />
-        <limit lower="-5.350" upper="0.205" effort="10" velocity="1.0" />
+        <axis xyz="-1 0 0" />
+        <limit lower="-0.205" upper="5.350" effort="10" velocity="1.0" />
     </joint>
     
     <link name="forearm_link">

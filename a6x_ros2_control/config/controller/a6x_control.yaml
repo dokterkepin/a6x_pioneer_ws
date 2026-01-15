@@ -4,18 +4,31 @@ controller_manager:
 
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
+    arm_controller:
+      type: joint_trajectory_controller/JointTrajectoryController     
+    finger_controller:
+      type: position_controllers/GripperActionController 
 
-    position_controller:
-      type: position_controllers/JointGroupPositionController
-
-position_controller:
+arm_controller:
   ros__parameters:
     joints:
+      - shoulder_yaw_joint
+      - arm_roll_joint
       - forearm_roll_joint
       - lower_wrist_roll_joint
-      - arm_roll_joint
       - upper_wrist_pitch_joint
-      - shoulder_yaw_joint
       - palm_roll_joint
-      - left_finger_prismatic_joint
-    interface_name: position
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+
+finger_controller:
+  ros__parameters:
+    joint: left_finger_prismatic_joint
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity

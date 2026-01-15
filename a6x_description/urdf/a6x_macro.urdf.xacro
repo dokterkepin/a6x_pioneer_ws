@@ -69,7 +69,7 @@
             <child link="arm_link" />
             <origin xyz="-0.039 0.000 0.070" rpy="0 0 0" />
             <axis xyz="-1 0 0" />
-            <limit lower="-2.967" upper="0.785" effort="10" velocity="1.0" />
+            <limit lower="-0.785" upper="2.967" effort="10" velocity="1.0" />
         </joint>
 
         <link name="arm_link">
@@ -100,7 +100,7 @@
             <child link="forearm_link" />
             <origin xyz="0.000 -0.283 0.100" rpy="0 0 0" />
             <axis xyz="-1 0 0" />
-            <limit lower="-5.350" upper="0.205" effort="10" velocity="1.0" />
+            <limit lower="-0.205" upper="5.350" effort="10" velocity="1.0" />
         </joint>
         
         <link name="forearm_link">
@@ -233,7 +233,7 @@
             <child link="right_finger_link" />
             <origin xyz="0.038 0.040 0.016" rpy="0 0 0" />
             <axis xyz="0 -1 0" />
-            <limit lower="-0.019" upper="0.010" effort="1" velocity="4.8" />
+            <limit lower="-0.010" upper="0.019" effort="1" velocity="4.8" />
         </joint>
 
         <link name="left_finger_link">
