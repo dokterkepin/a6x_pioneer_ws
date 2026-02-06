@@ -27,4 +27,4 @@ moveit_simple_controller_manager:
     action_ns: gripper_cmd
     default: true
     joints:
-      - left_finger_prismatic_joint-
+      - left_finger_prismatic_joint

@@ -30,7 +30,8 @@ arm_controller:
       - velocity
 finger_controller:
   ros__parameters:
-    joint: left_finger_prismatic_joint
+    joint: 
+      left_finger_prismatic_joint
     command_interfaces:
       - position
     state_interfaces:

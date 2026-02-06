@@ -12,19 +12,37 @@ find_package(rclcpp REQUIRED)
 find_package(moveit_visual_tools REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(tf2 REQUIRED)
+find_package(tf2_ros REQUIRED)
+find_package(tf2_msgs REQUIRED)
 find_package(example_interfaces REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(moveit_task_constructor_core REQUIRED)
 
 add_executable(test_moveit src/test_moveit.cpp)
 add_executable(hello_moveit src/hello_moveit.cpp)
 add_executable(commander src/commander.cpp)
+add_executable(mtc_tutorial src/mtc_tutorial.cpp)
+
 ament_target_dependencies(test_moveit rclcpp moveit_ros_planning_interface geometry_msgs tf2 example_interfaces)
 ament_target_dependencies(hello_moveit rclcpp moveit_ros_planning_interface moveit_visual_tools)
 ament_target_dependencies(commander rclcpp moveit_ros_planning_interface geometry_msgs tf2 example_interfaces std_msgs)
+ament_target_dependencies(mtc_tutorial 
+  moveit_task_constructor_core 
+  rclcpp 
+  std_msgs 
+  tf2_msgs 
+  tf2_ros 
+  geometry_msgs 
+  moveit_ros_planning_interface
+)
+install(DIRECTORY launch
+  DESTINATION share/${PROJECT_NAME})
+
 install(TARGETS
   test_moveit
   hello_moveit
   commander
+  mtc_tutorial
   DESTINATION lib/${PROJECT_NAME}
 )
 
