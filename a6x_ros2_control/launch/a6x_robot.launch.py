@@ -11,6 +11,10 @@ from launch.substitutions import (
 
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
+from moveit_configs_utils import MoveItConfigsBuilder
+
+
+
 
 
 def generate_launch_description():
@@ -20,15 +24,19 @@ def generate_launch_description():
         DeclareLaunchArgument(
             "gui",
             default_value="true",
-            description="Start RViz2 automatically with this launch file.",
+            description="Start RViz2",
         )
     )
     pkg_path = FindPackageShare("a6x_ros2_control")
-    gui = LaunchConfiguration("gui")
 
     rviz_config_file = PathJoinSubstitution(
-        [pkg_path, "config", "rviz", "a6x_config.rviz"]
+        [FindPackageShare("a6x_moveit_config"), "config", "moveit.rviz"]
     )
+
+    moveit_config = (
+        MoveItConfigsBuilder("a6x", package_name="a6x_moveit_config").to_moveit_configs()
+    )
+
     robot_controllers = PathJoinSubstitution(
         [pkg_path, "config", "controller", "a6x_control.yaml"]
     )
@@ -54,10 +62,7 @@ def generate_launch_description():
     control_node = Node(
         package="controller_manager",
         executable="ros2_control_node",
-        parameters=[robot_controllers],
-        remappings=[
-            ("~/robot_description", "/robot_description"),
-        ],
+        parameters=[robot_description, robot_controllers],
         output="both",
     )
 
@@ -87,14 +92,22 @@ def generate_launch_description():
         output="both",
         parameters=[robot_description],
     )
+
     rviz_node = Node(
         package="rviz2",
         executable="rviz2",
         name="rviz2",
         output="log",
         arguments=["-d", rviz_config_file],
-        condition=IfCondition(gui),
+        parameters=[moveit_config.to_dict()],
+        condition=IfCondition(LaunchConfiguration("gui")),
     )
+
+    move_group_node = Node(
+        package="moveit_ros_move_group",
+        executable="move_group",
+        output="screen",
+        parameters=[moveit_config.to_dict()])
 
     joint_state_broadcaster_spawner = Node(
         package="controller_manager",
@@ -102,37 +115,37 @@ def generate_launch_description():
         arguments=["joint_state_broadcaster"],
     )
 
-    # Delay start of joint_state_broadcaster after arm_controller
-    delay_joint_state_broadcaster_after_arm_controller = RegisterEventHandler(
+    # Delay arm_controller after joint_state_broadcaster
+    delay_arm_controller_after_joint_state_broadcaster = RegisterEventHandler(
         event_handler=OnProcessExit(
-            target_action=arm_controller_spawner,
-            on_exit=[joint_state_broadcaster_spawner],
+            target_action=joint_state_broadcaster_spawner,
+            on_exit=[arm_controller_spawner],
         )
     )
     
-    # Delay finger_controller after joint_state_broadcaster
-    delay_finger_controller_after_joint_state_broadcaster = RegisterEventHandler(
+    # Delay finger_controller after arm_controller
+    delay_finger_controller_after_arm_controller = RegisterEventHandler(
         event_handler=OnProcessExit(
-            target_action=joint_state_broadcaster_spawner,
+            target_action=arm_controller_spawner,
             on_exit=[finger_controller_spawner],
         )
     )
 
-    # Delay rviz start after finger_controller
-    delay_rviz_after_finger_controller = RegisterEventHandler(
+    # Delay MoveIt and RViz after finger_controller
+    delay_moveit_after_controllers = RegisterEventHandler(
         event_handler=OnProcessExit(
             target_action=finger_controller_spawner,
-            on_exit=[rviz_node],
+            on_exit=[move_group_node, rviz_node],
         )
     )
 
     nodes = [
         control_node,
         robot_state_pub_node,
-        arm_controller_spawner,
-        delay_joint_state_broadcaster_after_arm_controller,
-        delay_finger_controller_after_joint_state_broadcaster,
-        delay_rviz_after_finger_controller,
+        joint_state_broadcaster_spawner,
+        delay_arm_controller_after_joint_state_broadcaster,
+        delay_finger_controller_after_arm_controller,
+        delay_moveit_after_controllers,
     ]
 
     return LaunchDescription(declared_arguments + nodes)

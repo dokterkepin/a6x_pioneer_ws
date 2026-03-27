@@ -22,6 +22,7 @@ add_executable(test_moveit src/test_moveit.cpp)
 add_executable(hello_moveit src/hello_moveit.cpp)
 add_executable(commander src/commander.cpp)
 add_executable(mtc_tutorial src/mtc_tutorial.cpp)
+add_executable(position src/position.cpp)
 
 ament_target_dependencies(test_moveit rclcpp moveit_ros_planning_interface geometry_msgs tf2 example_interfaces)
 ament_target_dependencies(hello_moveit rclcpp moveit_ros_planning_interface moveit_visual_tools)
@@ -39,6 +40,7 @@ install(DIRECTORY launch
   DESTINATION share/${PROJECT_NAME})
 
 install(TARGETS
+  position
   test_moveit
   hello_moveit
   commander

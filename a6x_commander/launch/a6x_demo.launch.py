@@ -14,19 +14,13 @@ def generate_launch_description():
         .to_moveit_configs()
     )
 
-    move_group_capabilities = {
-        "capabilities": "move_group/ExecuteTaskSolutionCapability"
-    }
-
     # Start the actual move_group node/action server
     run_move_group_node = Node(
         package="moveit_ros_move_group",
         executable="move_group",
         output="screen",
         parameters=[
-            move_group_capabilities,
-            moveit_config.to_dict(),
-        ],
+            moveit_config.to_dict()],
     )
 
     # RViz

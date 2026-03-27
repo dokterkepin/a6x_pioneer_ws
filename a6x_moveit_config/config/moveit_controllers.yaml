@@ -16,7 +16,6 @@ moveit_simple_controller_manager:
       - lower_wrist_roll_joint
       - upper_wrist_pitch_joint
       - palm_roll_joint
-      
   finger_controller:
     type: GripperCommand
     action_ns: gripper_cmd

@@ -84,9 +84,4 @@
     <disable_collisions link1="right_finger_link" link2="shoulder_link" reason="Never"/>
     <disable_collisions link1="right_finger_link" link2="upper_wrist_link" reason="Never"/>
     <disable_collisions link1="shoulder_link" link2="upper_wrist_link" reason="Never"/>
-    <disable_collisions link1="camera_link" link2="left_finger_link" reason="Never"/>
-    <disable_collisions link1="camera_link" link2="lower_wrist_link" reason="Never"/>
-    <disable_collisions link1="camera_link" link2="palm_link" reason="Never"/>
-    <disable_collisions link1="camera_link" link2="right_finger_link" reason="Never"/>
-    <disable_collisions link1="camera_link" link2="upper_wrist_link" reason="Adjacent"/>
 </robot>
