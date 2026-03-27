@@ -42,7 +42,7 @@
     <group_state name="home" group="arm">
         <joint name="arm_roll_joint" value="1.2483"/>
         <joint name="forearm_roll_joint" value="2.5546"/>
-        <joint name="lower_wrist_roll_joint" value="2.2165"/>
+        <joint name="lower_wrist_roll_joint" value="0"/>
         <joint name="palm_roll_joint" value="0"/>
         <joint name="shoulder_yaw_joint" value="0"/>
         <joint name="upper_wrist_pitch_joint" value="0"/>

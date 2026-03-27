@@ -12,7 +12,9 @@
   <depend>moveit_ros_planning_interface</depend>
   <depend>rclcpp</depend>
   <depend>moveit_visual_tools</depend>
+  <depend>rviz_visual_tools</depend>
   <depend>geometry_msgs</depend>
+  <depend>graph_msgs</depend>
   <depend>tf2</depend>
   <depend>example_interfaces</depend>
   <depend>std_msgs</depend>
@@ -20,7 +22,6 @@
   <depend>tf2_ros</depend>
   <depend>tf2_msgs</depend>
   
-
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
 
