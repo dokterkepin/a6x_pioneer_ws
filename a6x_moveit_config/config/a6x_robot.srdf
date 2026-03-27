@@ -17,6 +17,7 @@
         <joint name="lower_wrist_roll_joint"/>
         <joint name="upper_wrist_pitch_joint"/>
         <joint name="palm_roll_joint"/>
+        <joint name="end_effector_fixed_joint"/>
     </group>
     <group name="finger">
         <joint name="left_finger_prismatic_joint"/>
@@ -41,7 +42,7 @@
     <group_state name="home" group="arm">
         <joint name="arm_roll_joint" value="1.2483"/>
         <joint name="forearm_roll_joint" value="2.5546"/>
-        <joint name="lower_wrist_roll_joint" value="0"/>
+        <joint name="lower_wrist_roll_joint" value="2.2165"/>
         <joint name="palm_roll_joint" value="0"/>
         <joint name="shoulder_yaw_joint" value="0"/>
         <joint name="upper_wrist_pitch_joint" value="0"/>
@@ -56,31 +57,36 @@
         <joint name="left_finger_prismatic_joint" value="-0.01"/>
     </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
-    <end_effector name="finger" parent_link="palm_link" group="finger"/>
+    <end_effector name="finger" parent_link="end_effector_link" group="finger"/>
     <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->
     <virtual_joint name="virtual_joint" type="fixed" parent_frame="world" child_link="base_link"/>
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
     <disable_collisions link1="arm_link" link2="base_link" reason="Never"/>
     <disable_collisions link1="arm_link" link2="forearm_link" reason="Adjacent"/>
-    <disable_collisions link1="arm_link" link2="lower_wrist" reason="Never"/>
+    <disable_collisions link1="arm_link" link2="lower_wrist_link" reason="Never"/>
     <disable_collisions link1="arm_link" link2="shoulder_link" reason="Adjacent"/>
     <disable_collisions link1="base_link" link2="forearm_link" reason="Default"/>
-    <disable_collisions link1="base_link" link2="lower_wrist" reason="Default"/>
+    <disable_collisions link1="base_link" link2="lower_wrist_link" reason="Default"/>
     <disable_collisions link1="base_link" link2="shoulder_link" reason="Adjacent"/>
-    <disable_collisions link1="base_link" link2="upper_wrist" reason="Default"/>
-    <disable_collisions link1="forearm_link" link2="lower_wrist" reason="Adjacent"/>
-    <disable_collisions link1="forearm_link" link2="upper_wrist" reason="Never"/>
-    <disable_collisions link1="left_finger_link" link2="lower_wrist" reason="Never"/>
+    <disable_collisions link1="base_link" link2="upper_wrist_link" reason="Default"/>
+    <disable_collisions link1="forearm_link" link2="lower_wrist_link" reason="Adjacent"/>
+    <disable_collisions link1="forearm_link" link2="upper_wrist_link" reason="Never"/>
+    <disable_collisions link1="left_finger_link" link2="lower_wrist_link" reason="Never"/>
     <disable_collisions link1="left_finger_link" link2="palm_link" reason="Adjacent"/>
     <disable_collisions link1="left_finger_link" link2="right_finger_link" reason="Never"/>
-    <disable_collisions link1="left_finger_link" link2="upper_wrist" reason="Never"/>
-    <disable_collisions link1="lower_wrist" link2="palm_link" reason="Never"/>
-    <disable_collisions link1="lower_wrist" link2="right_finger_link" reason="Never"/>
-    <disable_collisions link1="lower_wrist" link2="shoulder_link" reason="Never"/>
-    <disable_collisions link1="lower_wrist" link2="upper_wrist" reason="Adjacent"/>
+    <disable_collisions link1="left_finger_link" link2="upper_wrist_link" reason="Never"/>
+    <disable_collisions link1="lower_wrist_link" link2="palm_link" reason="Never"/>
+    <disable_collisions link1="lower_wrist_link" link2="right_finger_link" reason="Never"/>
+    <disable_collisions link1="lower_wrist_link" link2="shoulder_link" reason="Never"/>
+    <disable_collisions link1="lower_wrist_link" link2="upper_wrist_link" reason="Adjacent"/>
     <disable_collisions link1="palm_link" link2="right_finger_link" reason="Adjacent"/>
-    <disable_collisions link1="palm_link" link2="upper_wrist" reason="Adjacent"/>
+    <disable_collisions link1="palm_link" link2="upper_wrist_link" reason="Adjacent"/>
     <disable_collisions link1="right_finger_link" link2="shoulder_link" reason="Never"/>
-    <disable_collisions link1="right_finger_link" link2="upper_wrist" reason="Never"/>
-    <disable_collisions link1="shoulder_link" link2="upper_wrist" reason="Never"/>
+    <disable_collisions link1="right_finger_link" link2="upper_wrist_link" reason="Never"/>
+    <disable_collisions link1="shoulder_link" link2="upper_wrist_link" reason="Never"/>
+    <disable_collisions link1="camera_link" link2="left_finger_link" reason="Never"/>
+    <disable_collisions link1="camera_link" link2="lower_wrist_link" reason="Never"/>
+    <disable_collisions link1="camera_link" link2="palm_link" reason="Never"/>
+    <disable_collisions link1="camera_link" link2="right_finger_link" reason="Never"/>
+    <disable_collisions link1="camera_link" link2="upper_wrist_link" reason="Adjacent"/>
 </robot>

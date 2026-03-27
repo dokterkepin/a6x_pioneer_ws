@@ -9,8 +9,8 @@
             <joint name="${joint_name}">
                 <param name="id">${device_id}</param>
                 <param name="motor_type">GO-M8010-6</param>
-                <param name="pos_gain">30.0</param>
-                <param name="vel_gain">1.0</param>
+                <param name="pos_gain">230.0</param>
+                <param name="vel_gain">5.0</param>
                 <param name="temperature_limit">80.</param>
                 <command_interface name="position" />
                 <command_interface name="effort" />

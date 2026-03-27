@@ -128,13 +128,13 @@
 
         <joint name="lower_wrist_roll_joint" type="revolute">
             <parent link="forearm_link" />
-            <child link="lower_wrist" />
+            <child link="lower_wrist_link" />
             <origin xyz="0.059 0.139 -0.185" rpy="0 0 0" />
             <axis xyz="1 0 0" />
             <limit lower="-3.14" upper="3.14" effort="10" velocity="1.0" />
         </joint>
 
-        <link name="lower_wrist">
+        <link name="lower_wrist_link">
             <visual>
                 <geometry>
                 <mesh filename="package://a6x_description/meshes/visual/lower_wrist_link.STL" /> 
@@ -158,14 +158,14 @@
         </link>
 
         <joint name="upper_wrist_pitch_joint" type="revolute">
-            <parent link="lower_wrist" />
-            <child link="upper_wrist" />
+            <parent link="lower_wrist_link" />
+            <child link="upper_wrist_link" />
             <origin xyz="0.060 0.020 0.000" rpy="0 0 0" />
             <axis xyz="0 1 0" />
             <limit lower="-1.57" upper="1.57" effort="10" velocity="1.0" />
         </joint>
 
-        <link name="upper_wrist">
+        <link name="upper_wrist_link">
             <visual>
                 <geometry>
                 <mesh filename="package://a6x_description/meshes/visual/upper_wrist_link.STL" />
@@ -188,8 +188,37 @@
             </inertial>
         </link>
 
+    <joint name="camera_fixed_joint" type="fixed">
+        <parent link="upper_wrist_link" />
+        <child link="camera_link" />
+        <origin xyz="-0.013 0.041 0.014" rpy="0 0 0" />
+    </joint>
+
+    <link name="camera_link">
+        <visual>
+            <geometry>
+               <mesh filename="package://a6x_description/meshes/visual/camera_link.STL" />
+            </geometry>
+            <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
+            <material name="grey" />
+        </visual>
+        <collision>
+            <geometry>
+               <mesh filename="package://a6x_description/meshes/visual/camera_link.STL" />
+        </geometry>
+            <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
+        </collision>
+        <inertial>
+            <mass value="0.028176" />
+            <origin xyz="0.000530 -0.008677 0.020667" rpy="0 0 0" />
+            <inertia ixx="0.000005" ixy="0.000000" ixz="0.000000" 
+                     iyy="0.000002" iyz="-0.000001" 
+                     izz="0.000004" />
+        </inertial>
+    </link>
+
         <joint name="palm_roll_joint" type="revolute">
-            <parent link="upper_wrist" />
+            <parent link="upper_wrist_link" />
             <child link="palm_link" />
             <origin xyz="0.019 0.055 0.000" rpy="0 0 0" />
             <axis xyz="1 0 0" />
@@ -281,7 +310,14 @@
                         izz="0.000065" />
             </inertial>
         </link>
+            
+        <joint name="end_effector_fixed_joint" type="fixed">
+            <parent link="palm_link" />
+            <child link="end_effector_link" />
+            <origin xyz="0.1 0.000 0.000" rpy="0 0 0" />
+        </joint>
 
+        <link name="end_effector_link" />
 
     </xacro:macro>
 </robot>

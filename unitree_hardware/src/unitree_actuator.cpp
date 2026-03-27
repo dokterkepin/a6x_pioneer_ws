@@ -11,9 +11,6 @@ bool UnitreeActuator::init(const std::shared_ptr<SerialPort> & serial_port, cons
   // Actuator Parameter
   // TODO : use default value & avoid segmentation fault
   id_ = std::stoi(info.parameters.at("id"));
-  pos_gain_ = std::stod(info.parameters.at("pos_gain")) / (queryGearRatio(motor_type_) * queryGearRatio(motor_type_));
-  vel_gain_ = std::stod(info.parameters.at("vel_gain")) / (queryGearRatio(motor_type_) * queryGearRatio(motor_type_));
-
   temperature_limit_ = std::stod(info.parameters.at("temperature_limit"));
   std::string motor_type_str = info.parameters.at("motor_type");
 
@@ -22,9 +19,14 @@ bool UnitreeActuator::init(const std::shared_ptr<SerialPort> & serial_port, cons
     return false;
   }
 
+  // IMPORTANT: Set motor_type_ BEFORE using it in queryGearRatio()
   if (motor_type_str == "A1")              { motor_type_ = MotorType::A1;         }
   else if (motor_type_str == "B1")         { motor_type_ = MotorType::B1;         }
   else if (motor_type_str == "GO-M8010-6") { motor_type_ = MotorType::GO_M8010_6; }
+
+  // Now calculate gains with correct motor_type_
+  pos_gain_ = std::stod(info.parameters.at("pos_gain")) / (queryGearRatio(motor_type_) * queryGearRatio(motor_type_));
+  vel_gain_ = std::stod(info.parameters.at("vel_gain")) / (queryGearRatio(motor_type_) * queryGearRatio(motor_type_));
 
   // add sleep to ensure the motor is ready
   std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -75,7 +77,7 @@ bool UnitreeActuator::set_position(const double & pos_cmd)
   clear_cmd();
 
   // TODO: Check this compute_approximate_torque functions ???
-  // double pos_gain = pos_gain_;
+  double pos_gain = pos_gain_;
   // // Torque Limit
   // if (torque_limit_ != 0.) {
   //   const double approx_input_torque = abs(compute_approximately_input_torque(pos_cmd, 0., 0., pos_gain, 0.));
@@ -84,12 +86,12 @@ bool UnitreeActuator::set_position(const double & pos_cmd)
   //   }
   // }
 
-  // Temperature Limit
+  // Temperature Limit: Use temp variable instead of modifying member variable permanently
   if (motor_data_.temp > temperature_limit_) {
-    pos_gain_ = pos_gain_ * 0.0;
+    pos_gain = 0.0;
   } 
 
-  motor_cmd_.kp = pos_gain_;
+  motor_cmd_.kp = pos_gain;
   motor_cmd_.kd = vel_gain_;
   motor_cmd_.q = (pos_cmd + offset_) * queryGearRatio(motor_type_);
   motor_cmd_.dq = 0.0;
