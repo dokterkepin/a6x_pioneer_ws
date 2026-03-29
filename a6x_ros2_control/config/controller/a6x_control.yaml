@@ -32,3 +32,7 @@ finger_controller:
     state_interfaces:
       - position
       - velocity
+    goal_tolerance: 0.01
+    allow_stalling: true
+    stall_timeout: 0.1
+    stall_velocity_threshold: 0.01

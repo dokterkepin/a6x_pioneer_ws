@@ -10,7 +10,7 @@ def generate_launch_description():
     # Build moveit config using the same approach as demo.launch.py
     moveit_config = (
         MoveItConfigsBuilder("a6x_robot", package_name="a6x_moveit_config")
-        .planning_pipelines(pipelines=["ompl"], default_planning_pipeline="ompl")
+        .planning_pipelines(pipelines=["pilz_industrial_motion_planner"], default_planning_pipeline="pilz_industrial_motion_planner")
         .to_moveit_configs()
     )
 

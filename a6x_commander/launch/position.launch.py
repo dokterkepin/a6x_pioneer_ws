@@ -6,7 +6,7 @@ from moveit_configs_utils import MoveItConfigsBuilder
 def generate_launch_description():
     moveit_config = (
         MoveItConfigsBuilder("diffbot", package_name="a6x_moveit_config")
-        .planning_pipelines(pipelines=["ompl"])
+        .planning_pipelines(pipelines=["pilz_industrial_motion_planner"], default_planning_pipeline="pilz_industrial_motion_planner")
         .to_moveit_configs()
     )
 
