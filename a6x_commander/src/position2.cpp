@@ -1,7 +1,6 @@
 #include <memory>
 #include <thread>
 #include <chrono>
-#include <cmath>
 #include <rclcpp/rclcpp.hpp>
 #include <moveit/move_group_interface/move_group_interface.h>
 #include <moveit/planning_scene_interface/planning_scene_interface.h>
@@ -12,10 +11,10 @@ int main(int argc, char* argv[])
   // Initialize ROS and create the Node
   rclcpp::init(argc, argv);
   auto const node = std::make_shared<rclcpp::Node>(
-    "position",
+    "position2",
     rclcpp::NodeOptions().automatically_declare_parameters_from_overrides(true)
   );
-  auto const logger = rclcpp::get_logger("position");
+  auto const logger = rclcpp::get_logger("position2");
 
   // Spin up a SingleThreadedExecutor so MoveItVisualTools interact with ROS
   rclcpp::executors::SingleThreadedExecutor executor;
@@ -28,7 +27,7 @@ int main(int argc, char* argv[])
   auto finger_group_interface = MoveGroupInterface(node, "finger");
   move_group_interface.setPlanningPipelineId("pilz_industrial_motion_planner");
   move_group_interface.setPlannerId("PTP");
-  
+
   RCLCPP_INFO(logger, "Planning Pipeline: %s", move_group_interface.getPlanningPipelineId().c_str());
   RCLCPP_INFO(logger, "Planner ID: %s", move_group_interface.getPlannerId().c_str());
   RCLCPP_INFO(logger, "Finger Planning Pipeline: %s", finger_group_interface.getPlanningPipelineId().c_str());
@@ -77,26 +76,23 @@ int main(int argc, char* argv[])
     RCLCPP_INFO(logger, "Floor collision object added");
   }
 
-  // Compute orientation for gripper pointing nearly straight down,
-  // accounting for shoulder rotation toward each target position.
-  // tilt_deg controls how far from horizontal (75° = nearly vertical, 15° from straight down)
-  auto make_down_pose = [](double x, double y, double z, double tilt_deg = 75.0) {
-    geometry_msgs::msg::Pose pose;
-    pose.position.x = x;
-    pose.position.y = y;
-    pose.position.z = z;
+  // Identity orientation: no rotation, gripper stays aligned with base frame
+  // Gripper stays horizontal, but faces toward the target direction
+  auto make_forward_pose = [](double x, double y, double z) {
+      geometry_msgs::msg::Pose pose;
+      pose.position.x = x;
+      pose.position.y = y;
+      pose.position.z = z;
 
-    double yaw = std::atan2(y, x);
-    double tilt = tilt_deg * M_PI / 180.0;
-    double hy = yaw / 2.0;
-    double ht = tilt / 2.0;
+      double yaw = std::atan2(y, x);
+      double hy = yaw / 2.0;
 
-    // Quaternion for Rz(yaw) * Ry(tilt)
-    pose.orientation.w = std::cos(hy) * std::cos(ht);
-    pose.orientation.x = -std::sin(hy) * std::sin(ht);
-    pose.orientation.y = std::cos(hy) * std::sin(ht);
-    pose.orientation.z = std::sin(hy) * std::cos(ht);
-    return pose;
+      // Rz(yaw) only — horizontal, rotated toward target
+      pose.orientation.x = 0.0;
+      pose.orientation.y = 0.0;
+      pose.orientation.z = std::sin(hy);
+      pose.orientation.w = std::cos(hy);
+      return pose;
   };
 
   for (int i = 0; i < 100; ++i) {
@@ -124,7 +120,7 @@ int main(int argc, char* argv[])
 
     // Set a target Pose
     {
-      auto const target_pose = make_down_pose(0.4, -0.1, 0.1);
+      auto const target_pose = make_forward_pose(0.4, -0.1, 0.2);
       move_group_interface.setPoseTarget(target_pose);
 
       draw_title("Planning");
@@ -146,7 +142,7 @@ int main(int argc, char* argv[])
     }
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
-    auto const target_pose2 = make_down_pose(0.2, 0.0, 0.4);
+    auto const target_pose2 = make_forward_pose(0.2, 0.0, 0.4);
     move_group_interface.setPoseTarget(target_pose2);
     moveit::planning_interface::MoveGroupInterface::Plan plan2;
     auto const success2 = static_cast<bool>(move_group_interface.plan(plan2));
@@ -165,7 +161,7 @@ int main(int argc, char* argv[])
 
     // Second target pose
     {
-      auto const target_pose3 = make_down_pose(0.1, 0.3, 0.2);
+      auto const target_pose3 = make_forward_pose(0.1, 0.3, 0.2);
       move_group_interface.setPoseTarget(target_pose3);
       moveit::planning_interface::MoveGroupInterface::Plan plan3;
       auto const success3 = static_cast<bool>(move_group_interface.plan(plan3));
@@ -202,25 +198,25 @@ int main(int argc, char* argv[])
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
     // Third target pose
-    // {
-    //   auto const target_pose4 = make_down_pose(0.35, -0.4, 0.23);
-    //   move_group_interface.setPoseTarget(target_pose4);
-    //   moveit::planning_interface::MoveGroupInterface::Plan plan4;
-    //   auto const success4 = static_cast<bool>(move_group_interface.plan(plan4));
+    {
+      auto const target_pose4 = make_forward_pose(0.35, -0.4, 0.23);
+      move_group_interface.setPoseTarget(target_pose4);
+      moveit::planning_interface::MoveGroupInterface::Plan plan4;
+      auto const success4 = static_cast<bool>(move_group_interface.plan(plan4));
 
-    //   if (success4) {
-    //     draw_trajectory_tool_path(plan4.trajectory_);
-    //     moveit_visual_tools.trigger();
-    //     draw_title("Executing Fourth Plan");
-    //     moveit_visual_tools.trigger();
-    //     move_group_interface.execute(plan4);
-    //   } else {
-    //     draw_title("Fourth Plan Failed!");
-    //     moveit_visual_tools.trigger();
-    //     RCLCPP_ERROR(logger, "Fourth plan failed!");
-    //   }
-    // }
-    // std::this_thread::sleep_for(std::chrono::seconds(1));
+      if (success4) {
+        draw_trajectory_tool_path(plan4.trajectory_);
+        moveit_visual_tools.trigger();
+        draw_title("Executing Fourth Plan");
+        moveit_visual_tools.trigger();
+        move_group_interface.execute(plan4);
+      } else {
+        draw_title("Fourth Plan Failed!");
+        moveit_visual_tools.trigger();
+        RCLCPP_ERROR(logger, "Fourth plan failed!");
+      }
+    }
+    std::this_thread::sleep_for(std::chrono::seconds(1));
 
     // Close fingers
     finger_group_interface.setNamedTarget("home");
