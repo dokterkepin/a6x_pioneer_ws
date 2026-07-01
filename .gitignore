@@ -16,6 +16,9 @@
 *.dylib
 *.dll
 
+# Track prebuilt Unitree SDK binaries (not built from source; needed at runtime)
+!unitree_hardware/unitree_actuator_sdk/lib/*.so
+
 # Fortran module files
 *.mod
 *.smod
@@ -33,3 +36,4 @@
 
 .vscode/
 build
+.claude/
