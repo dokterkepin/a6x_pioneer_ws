@@ -1,14 +1,16 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="a6x_robot">
-    <xacro:arg name="initial_positions_file" default="initial_positions.yaml" />
+    <!-- use_sim:=true selects Isaac Sim (TopicBasedSystem); false selects real hardware -->
+    <xacro:arg name="use_sim" default="true" />
+    <xacro:arg name="initial_positions_file" default="$(find a6x_moveit_config)/config/initial_positions.yaml" />
 
     <!-- Import a6x_robot urdf file -->
     <xacro:include filename="$(find a6x_description)/urdf/a6x.urdf" />
 
-    <!-- Import control_xacro -->
-    <xacro:include filename="a6x_robot.ros2_control.xacro" />
+    <!-- Import the shared ros2_control system macro (real hardware / Isaac Sim) -->
+    <xacro:include filename="$(find a6x_ros2_control)/description/ros2_control/a6x_system.ros2_control.xacro" />
 
-
-    <xacro:a6x_robot_ros2_control name="FakeSystem" initial_positions_file="$(arg initial_positions_file)"/>
+    <xacro:a6x_system_ros2_control use_sim="$(arg use_sim)"
+                                   initial_positions_file="$(arg initial_positions_file)" />
 
 </robot>

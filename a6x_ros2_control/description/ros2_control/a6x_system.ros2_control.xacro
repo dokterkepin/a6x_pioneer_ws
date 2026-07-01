@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- Real hardware driver macros -->
+    <xacro:include filename="$(find unitree_hardware)/description/ros2_control/unitree_motor.ros2_control.urdf.xacro" />
+    <xacro:include filename="$(find cybergear_control)/description/ros2_control/robstride.ros2_control.urdf.xacro"/>
+    <xacro:include filename="$(find dynamixel_hardware_interface)/description/ros2_control/dynamixel_motor.ros2_control.xacro"/>
+
+    <!--
+      Single ros2_control system for the A6X arm.
+      use_sim:=true  -> Isaac Sim via topic_based_ros2_control/TopicBasedSystem
+      use_sim:=false -> real hardware (Unitree serial + Robstride CAN + Dynamixel serial)
+    -->
+    <xacro:macro name="a6x_system_ros2_control"
+                 params="use_sim:=false
+                         initial_positions_file:=''
+                         serial_port:=/dev/ttyUSB0
+                         serial_port1:=/dev/ttyUSB1
+                         canbus:=can0">
+
+        <xacro:if value="${use_sim}">
+            <xacro:property name="initial_positions"
+                            value="${load_yaml(initial_positions_file)['initial_positions']}"/>
+            <ros2_control name="IsaacSystem" type="system">
+                <hardware>
+                    <plugin>topic_based_ros2_control/TopicBasedSystem</plugin>
+                    <param name="joint_states_topic">/isaac_joint_states</param>
+                    <param name="joint_commands_topic">/isaac_joint_command</param>
+                </hardware>
+                <xacro:macro name="sim_joint" params="joint_name">
+                    <joint name="${joint_name}">
+                        <command_interface name="position"/>
+                        <state_interface name="position">
+                            <param name="initial_value">${initial_positions[joint_name]}</param>
+                        </state_interface>
+                        <state_interface name="velocity"/>
+                    </joint>
+                </xacro:macro>
+                <xacro:sim_joint joint_name="shoulder_yaw_joint"/>
+                <xacro:sim_joint joint_name="arm_roll_joint"/>
+                <xacro:sim_joint joint_name="forearm_roll_joint"/>
+                <xacro:sim_joint joint_name="lower_wrist_roll_joint"/>
+                <xacro:sim_joint joint_name="upper_wrist_pitch_joint"/>
+                <xacro:sim_joint joint_name="palm_roll_joint"/>
+                <xacro:sim_joint joint_name="left_finger_prismatic_joint"/>
+            </ros2_control>
+        </xacro:if>
+
+        <xacro:unless value="${use_sim}">
+            <xacro:unitree_ros2_control name="ShoulderYaw" serial_device="${serial_port}" device_id="1" joint_name="shoulder_yaw_joint" />
+            <xacro:robstride_ros2_control name="ArmRoll" canbus="${canbus}" device_id="2" joint_name="arm_roll_joint"/>
+            <xacro:unitree_ros2_control name="ForearmRoll" serial_device="${serial_port}" device_id="3" joint_name="forearm_roll_joint" />
+            <xacro:unitree_ros2_control name="LowerWristRoll" serial_device="${serial_port}" device_id="4" joint_name="lower_wrist_roll_joint" />
+            <xacro:unitree_ros2_control name="UpperWristPitch" serial_device="${serial_port}" device_id="5" joint_name="upper_wrist_pitch_joint" />
+            <xacro:dynamixel_ros2_control name="PalmRoll" serial_device="${serial_port1}" device_id="6" joint_name="palm_roll_joint" />
+            <xacro:dynamixel_ros2_control name="LeftFingerPrismatic" serial_device="${serial_port1}" device_id="7" joint_name="left_finger_prismatic_joint"
+                                          use_prismatic="1"
+                                          revolute_max="0.0" revolute_min="-2.5"
+                                          prismatic_max="0.019" prismatic_min="-0.013" />
+        </xacro:unless>
+    </xacro:macro>
+</robot>
