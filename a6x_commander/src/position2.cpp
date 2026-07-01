@@ -1,6 +1,7 @@
 #include <memory>
 #include <thread>
 #include <chrono>
+#include <cmath>
 #include <rclcpp/rclcpp.hpp>
 #include <moveit/move_group_interface/move_group_interface.h>
 #include <moveit/planning_scene_interface/planning_scene_interface.h>
@@ -76,22 +77,24 @@ int main(int argc, char* argv[])
     RCLCPP_INFO(logger, "Floor collision object added");
   }
 
-  // Identity orientation: no rotation, gripper stays aligned with base frame
-  // Gripper stays horizontal, but faces toward the target direction
-  auto make_forward_pose = [](double x, double y, double z) {
+  // Gripper faces toward the target direction with a slight downward tilt
+  // tilt_deg controls how far from horizontal (0° = horizontal, 90° = straight down)
+  auto make_forward_pose = [](double x, double y, double z, double tilt_deg = 15.0) {
       geometry_msgs::msg::Pose pose;
       pose.position.x = x;
       pose.position.y = y;
       pose.position.z = z;
 
       double yaw = std::atan2(y, x);
+      double tilt = tilt_deg * M_PI / 180.0;
       double hy = yaw / 2.0;
+      double ht = tilt / 2.0;
 
-      // Rz(yaw) only — horizontal, rotated toward target
-      pose.orientation.x = 0.0;
-      pose.orientation.y = 0.0;
-      pose.orientation.z = std::sin(hy);
-      pose.orientation.w = std::cos(hy);
+      // Quaternion for Rz(yaw) * Ry(tilt)
+      pose.orientation.w = std::cos(hy) * std::cos(ht);
+      pose.orientation.x = -std::sin(hy) * std::sin(ht);
+      pose.orientation.y = std::cos(hy) * std::sin(ht);
+      pose.orientation.z = std::sin(hy) * std::cos(ht);
       return pose;
   };
 
@@ -161,7 +164,7 @@ int main(int argc, char* argv[])
 
     // Second target pose
     {
-      auto const target_pose3 = make_forward_pose(0.1, 0.3, 0.2);
+      auto const target_pose3 = make_forward_pose(0.1, 0.3, 0.2, 10.0);
       move_group_interface.setPoseTarget(target_pose3);
       moveit::planning_interface::MoveGroupInterface::Plan plan3;
       auto const success3 = static_cast<bool>(move_group_interface.plan(plan3));
@@ -199,7 +202,7 @@ int main(int argc, char* argv[])
 
     // Third target pose
     {
-      auto const target_pose4 = make_forward_pose(0.35, -0.4, 0.23);
+      auto const target_pose4 = make_forward_pose(0.35, -0.3, 0.23, 20.0);
       move_group_interface.setPoseTarget(target_pose4);
       moveit::planning_interface::MoveGroupInterface::Plan plan4;
       auto const success4 = static_cast<bool>(move_group_interface.plan(plan4));

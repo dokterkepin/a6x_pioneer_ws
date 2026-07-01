@@ -122,12 +122,33 @@ int main(int argc, char* argv[])
     }
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
-    // Set a target Pose
+    // Odd iterations: close fingers first (pick at home), then open after target4 (place)
+    // Even iterations: go to target1 first, close (pick there), then open after target4 (place)
+    if (i % 2 != 0) {
+      // Close fingers (pick at home)
+      finger_group_interface.setNamedTarget("home");
+      {
+        moveit::planning_interface::MoveGroupInterface::Plan close_plan;
+        auto const close_ok = static_cast<bool>(finger_group_interface.plan(close_plan));
+        if (close_ok) {
+          draw_title("Closing Fingers (Pick)");
+          moveit_visual_tools.trigger();
+          finger_group_interface.execute(close_plan);
+          std::this_thread::sleep_for(std::chrono::seconds(2));
+          RCLCPP_INFO(logger, "Fingers closed (pick at home)");
+        } else {
+          RCLCPP_ERROR(logger, "Failed to plan to close fingers!");
+        }
+      }
+      std::this_thread::sleep_for(std::chrono::seconds(1));
+    }
+
+    // Target 1
     {
-      auto const target_pose = make_down_pose(0.4, -0.1, 0.1);
+      auto const target_pose = make_down_pose(0.4, -0.1, 0.07, 20.0);
       move_group_interface.setPoseTarget(target_pose);
 
-      draw_title("Planning");
+      draw_title("Planning Target 1");
       moveit_visual_tools.trigger();
       moveit::planning_interface::MoveGroupInterface::Plan plan;
       auto const success = static_cast<bool>(move_group_interface.plan(plan));
@@ -135,37 +156,59 @@ int main(int argc, char* argv[])
       if (success) {
         draw_trajectory_tool_path(plan.trajectory_);
         moveit_visual_tools.trigger();
-        draw_title("Executing");
+        draw_title("Executing Target 1");
         moveit_visual_tools.trigger();
         move_group_interface.execute(plan);
       } else {
-        draw_title("Planning Failed!");
+        draw_title("Target 1 Failed!");
         moveit_visual_tools.trigger();
-        RCLCPP_ERROR(logger, "Planning failed!");
+        RCLCPP_ERROR(logger, "Target 1 failed!");
       }
     }
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
-    auto const target_pose2 = make_down_pose(0.2, 0.0, 0.4);
-    move_group_interface.setPoseTarget(target_pose2);
-    moveit::planning_interface::MoveGroupInterface::Plan plan2;
-    auto const success2 = static_cast<bool>(move_group_interface.plan(plan2));
-    if (success2) {
-      draw_trajectory_tool_path(plan2.trajectory_);
-      moveit_visual_tools.trigger();
-      draw_title("Executing Second Plan");
-      moveit_visual_tools.trigger();
-      move_group_interface.execute(plan2);
-    } else {
-      draw_title("Second Plan Failed!");
-      moveit_visual_tools.trigger();
-      RCLCPP_ERROR(logger, "Second plan failed!");
+    if (i % 2 == 0) {
+      // Close fingers (pick at target1)
+      finger_group_interface.setNamedTarget("home");
+      {
+        moveit::planning_interface::MoveGroupInterface::Plan close_plan;
+        auto const close_ok = static_cast<bool>(finger_group_interface.plan(close_plan));
+        if (close_ok) {
+          draw_title("Closing Fingers (Pick)");
+          moveit_visual_tools.trigger();
+          finger_group_interface.execute(close_plan);
+          std::this_thread::sleep_for(std::chrono::seconds(2));
+          RCLCPP_INFO(logger, "Fingers closed (pick at target1)");
+        } else {
+          RCLCPP_ERROR(logger, "Failed to plan to close fingers!");
+        }
+      }
+      std::this_thread::sleep_for(std::chrono::seconds(1));
+    }
+
+    // Target 2
+    {
+      auto const target_pose2 = make_down_pose(0.2, 0.0, 0.4);
+      move_group_interface.setPoseTarget(target_pose2);
+      moveit::planning_interface::MoveGroupInterface::Plan plan2;
+      auto const success2 = static_cast<bool>(move_group_interface.plan(plan2));
+      if (success2) {
+        draw_trajectory_tool_path(plan2.trajectory_);
+        moveit_visual_tools.trigger();
+        draw_title("Executing Target 2");
+        moveit_visual_tools.trigger();
+        move_group_interface.execute(plan2);
+      } else {
+        draw_title("Target 2 Failed!");
+        moveit_visual_tools.trigger();
+        RCLCPP_ERROR(logger, "Target 2 failed!");
+      }
     }
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
-    // Second target pose
+    // Target 3
     {
-      auto const target_pose3 = make_down_pose(0.1, 0.3, 0.2);
+      auto const target_pose3 = make_down_pose(0.1, 0.3, 0.3, 90.0);
       move_group_interface.setPoseTarget(target_pose3);
       moveit::planning_interface::MoveGroupInterface::Plan plan3;
       auto const success3 = static_cast<bool>(move_group_interface.plan(plan3));
@@ -173,68 +216,51 @@ int main(int argc, char* argv[])
       if (success3) {
         draw_trajectory_tool_path(plan3.trajectory_);
         moveit_visual_tools.trigger();
-        draw_title("Executing Third Plan");
+        draw_title("Executing Target 3");
         moveit_visual_tools.trigger();
         move_group_interface.execute(plan3);
       } else {
-        draw_title("Third Plan Failed!");
+        draw_title("Target 3 Failed!");
         moveit_visual_tools.trigger();
-        RCLCPP_ERROR(logger, "Third plan failed!");
+        RCLCPP_ERROR(logger, "Target 3 failed!");
       }
     }
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
-    // Open fingers
+    // Target 4
+    {
+      auto const target_pose4 = make_down_pose(0.35, -0.25, 0.1, 20.0);
+      move_group_interface.setPoseTarget(target_pose4);
+      moveit::planning_interface::MoveGroupInterface::Plan plan4;
+      auto const success4 = static_cast<bool>(move_group_interface.plan(plan4));
+
+      if (success4) {
+        draw_trajectory_tool_path(plan4.trajectory_);
+        moveit_visual_tools.trigger();
+        draw_title("Executing Target 4");
+        moveit_visual_tools.trigger();
+        move_group_interface.execute(plan4);
+      } else {
+        draw_title("Target 4 Failed!");
+        moveit_visual_tools.trigger();
+        RCLCPP_ERROR(logger, "Target 4 failed!");
+      }
+    }
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+
+    // Open fingers (place)
     finger_group_interface.setNamedTarget("open");
     {
       moveit::planning_interface::MoveGroupInterface::Plan open_plan;
       auto const open_ok = static_cast<bool>(finger_group_interface.plan(open_plan));
       if (open_ok) {
-        draw_title("Opening Fingers");
+        draw_title("Opening Fingers (Place)");
         moveit_visual_tools.trigger();
         finger_group_interface.execute(open_plan);
         std::this_thread::sleep_for(std::chrono::seconds(2));
-        RCLCPP_INFO(logger, "Fingers opened");
+        RCLCPP_INFO(logger, "Fingers opened (place)");
       } else {
         RCLCPP_ERROR(logger, "Failed to plan to open fingers!");
-      }
-    }
-    std::this_thread::sleep_for(std::chrono::seconds(1));
-
-    // Third target pose
-    // {
-    //   auto const target_pose4 = make_down_pose(0.35, -0.4, 0.23);
-    //   move_group_interface.setPoseTarget(target_pose4);
-    //   moveit::planning_interface::MoveGroupInterface::Plan plan4;
-    //   auto const success4 = static_cast<bool>(move_group_interface.plan(plan4));
-
-    //   if (success4) {
-    //     draw_trajectory_tool_path(plan4.trajectory_);
-    //     moveit_visual_tools.trigger();
-    //     draw_title("Executing Fourth Plan");
-    //     moveit_visual_tools.trigger();
-    //     move_group_interface.execute(plan4);
-    //   } else {
-    //     draw_title("Fourth Plan Failed!");
-    //     moveit_visual_tools.trigger();
-    //     RCLCPP_ERROR(logger, "Fourth plan failed!");
-    //   }
-    // }
-    // std::this_thread::sleep_for(std::chrono::seconds(1));
-
-    // Close fingers
-    finger_group_interface.setNamedTarget("home");
-    {
-      moveit::planning_interface::MoveGroupInterface::Plan close_plan;
-      auto const close_ok = static_cast<bool>(finger_group_interface.plan(close_plan));
-      if (close_ok) {
-        draw_title("Closing Fingers");
-        moveit_visual_tools.trigger();
-        finger_group_interface.execute(close_plan);
-        std::this_thread::sleep_for(std::chrono::seconds(2));
-        RCLCPP_INFO(logger, "Fingers closed");
-      } else {
-        RCLCPP_ERROR(logger, "Failed to plan to close fingers!");
       }
     }
     std::this_thread::sleep_for(std::chrono::seconds(1));

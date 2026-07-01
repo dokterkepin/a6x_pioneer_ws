@@ -14,9 +14,6 @@ from launch_ros.substitutions import FindPackageShare
 from moveit_configs_utils import MoveItConfigsBuilder
 
 
-
-
-
 def generate_launch_description():
     # Declare arguments
     declared_arguments = []
