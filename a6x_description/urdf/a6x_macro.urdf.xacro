@@ -13,23 +13,23 @@
         <link name="base_link">
             <visual>
                 <geometry>
-                <mesh filename="package://a6x_description/meshes/visual/base_link.STL" />
+                    <mesh filename="package://a6x_description/meshes/visual/base_link.STL" />
                 </geometry>
-                <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
+                    <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
                 <material name="grey" />
             </visual>
             <collision>
                 <geometry>
-                <mesh filename="package://a6x_description/meshes/visual/base_link.STL" />
+                    <mesh filename="package://a6x_description/meshes/visual/base_link.STL" />
                 </geometry>
                 <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
             </collision>
             <inertial>
-                <mass value="2.052381" />
-                <origin xyz="0.010773 -0.013141 0.019508" rpy="0 0 0" />
-                <inertia ixx="0.007060" ixy="-0.000705" ixz="-0.000013" 
-                        iyy="0.003238" iyz="0.000167" 
-                        izz="0.009216" />
+                <mass value="2.161679" />
+                <origin xyz="0.014568 -0.016319 0.019397" rpy="0 0 0" />
+                <inertia ixx="0.007515" ixy="-0.001184" ixz="-0.000026" 
+                        iyy="0.003859" iyz="0.000191" 
+                        izz="0.010255" />
             </inertial>
         </link>
 
@@ -44,14 +44,14 @@
         <link name="shoulder_link">
             <visual>
                 <geometry>
-                <mesh filename="package://a6x_description/meshes/visual/shoulder_link.STL" />
+                    <mesh filename="package://a6x_description/meshes/visual/shoulder_link.STL" />
                 </geometry>
                 <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
                 <material name="grey" />
             </visual>
             <collision>
                 <geometry>
-                <mesh filename="package://a6x_description/meshes/visual/shoulder_link.STL" />
+                    <mesh filename="package://a6x_description/meshes/visual/shoulder_link.STL" />
                 </geometry>
                 <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
             </collision>
@@ -75,14 +75,14 @@
         <link name="arm_link">
             <visual>
                 <geometry>
-                <mesh filename="package://a6x_description/meshes/visual/arm_link.STL" />
+                    <mesh filename="package://a6x_description/meshes/visual/arm_link.STL" />
                 </geometry>
                 <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
                 <material name="grey" />
             </visual>
             <collision>
                 <geometry>
-                <mesh filename="package://a6x_description/meshes/visual/arm_link.STL" />
+                    <mesh filename="package://a6x_description/meshes/visual/arm_link.STL" />
                 </geometry>
                 <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
             </collision>
@@ -106,14 +106,14 @@
         <link name="forearm_link">
             <visual>
                 <geometry>
-                <mesh filename="package://a6x_description/meshes/visual/forearm_link.STL" />
+                    <mesh filename="package://a6x_description/meshes/visual/forearm_link.STL" />
                 </geometry>
                 <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
                 <material name="grey" />
             </visual>
             <collision>
                 <geometry>
-                <mesh filename="package://a6x_description/meshes/visual/forearm_link.STL" />
+                    <mesh filename="package://a6x_description/meshes/visual/forearm_link.STL" />
                 </geometry>
                 <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
             </collision>
@@ -137,14 +137,14 @@
         <link name="lower_wrist_link">
             <visual>
                 <geometry>
-                <mesh filename="package://a6x_description/meshes/visual/lower_wrist_link.STL" /> 
+                    <mesh filename="package://a6x_description/meshes/visual/lower_wrist_link.STL" /> 
                 </geometry>
                 <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
                 <material name="grey" />
             </visual>
             <collision>
                 <geometry>
-                <mesh filename="package://a6x_description/meshes/visual/lower_wrist_link.STL" />
+                    <mesh filename="package://a6x_description/meshes/visual/lower_wrist_link.STL" />
                 </geometry>
                 <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
             </collision>
@@ -168,61 +168,61 @@
         <link name="upper_wrist_link">
             <visual>
                 <geometry>
-                <mesh filename="package://a6x_description/meshes/visual/upper_wrist_link.STL" />
+                    <mesh filename="package://a6x_description/meshes/visual/upper_wrist_link.STL" />
                 </geometry>
                 <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
                 <material name="grey" />
             </visual>
             <collision>
                 <geometry>
-                <mesh filename="package://a6x_description/meshes/visual/upper_wrist_link.STL" />
+                    <mesh filename="package://a6x_description/meshes/visual/upper_wrist_link.STL" />
                 </geometry>
                 <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
             </collision>
             <inertial>
-                <mass value="0.279057" />
-                <origin xyz="-0.001436 0.028250 0.000000" rpy="0 0 0" />
-                <inertia ixx="0.000143" ixy="0.000005" ixz="0.000000" 
-                        iyy="0.000087" iyz="0.000000" 
-                        izz="0.000135" />
+                <mass value="0.313268" />
+                <origin xyz="-0.000382 0.031134 0.000487" rpy="0 0 0" />
+                <inertia ixx="0.000165" ixy="-0.000002" ixz="0.000000" 
+                        iyy="0.000124" iyz="0.000001" 
+                        izz="0.000182" />
             </inertial>
         </link>
 
         <joint name="palm_roll_joint" type="revolute">
             <parent link="upper_wrist_link" />
             <child link="palm_link" />
-            <origin xyz="0.019 0.055 0.000" rpy="0 0 0" />
+            <origin xyz="0.022 0.044 0.001" rpy="0 0 0" />
             <axis xyz="1 0 0" />
-            <limit lower="0" upper="6.28" effort="10" velocity="1.0" />
+            <limit lower="-3.14" upper="3.14" effort="10" velocity="1.0" />
         </joint>
 
         <link name="palm_link">
             <visual>
                 <geometry>
-                <mesh filename="package://a6x_description/meshes/visual/palm_link.STL" />
+                    <mesh filename="package://a6x_description/meshes/visual/palm_link.STL" />
                 </geometry>
                 <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
                 <material name="grey" />
             </visual>
             <collision>
                 <geometry>
-                <mesh filename="package://a6x_description/meshes/visual/palm_link.STL" />
+                    <mesh filename="package://a6x_description/meshes/visual/palm_link.STL" />
                 </geometry>
                 <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
             </collision>
             <inertial>
-                <mass value="0.216056" />
-                <origin xyz="0.026410 0.000000 -0.008366" rpy="0 0 0" />
-                <inertia ixx="0.000145" ixy="0.000000" ixz="0.000007" 
-                        iyy="0.000080" iyz="0.000000" 
-                        izz="0.000126" />
+                <mass value="0.342542" />
+                <origin xyz="0.040329 0.000003 0.000000" rpy="0 0 0" />
+                <inertia ixx="0.000231" ixy="0.000000" ixz="0.000000" 
+                        iyy="0.000170" iyz="-0.000002" 
+                        izz="0.000299" />
             </inertial>
         </link>
 
         <joint name="left_finger_prismatic_joint" type="prismatic">
             <parent link="palm_link" />
             <child link="left_finger_link" />
-            <origin xyz="0.038 -0.040 0.016" rpy="0 0 0" />
+            <origin xyz="0.057 -0.048 0.016" rpy="0 0 0" />
             <axis xyz="0 -1 0" />
             <limit lower="-0.010" upper="0.019" effort="1" velocity="4.8" />
         </joint>
@@ -231,22 +231,22 @@
             <mimic joint="left_finger_prismatic_joint" multiplier="-1" offset="0" />
             <parent link="palm_link" />
             <child link="right_finger_link" />
-            <origin xyz="0.038 0.040 0.016" rpy="0 0 0" />
+            <origin xyz="0.057 0.048 0.016" rpy="0 0 0" />
             <axis xyz="0 -1 0" />
-            <limit lower="-0.010" upper="0.019" effort="1" velocity="4.8" />
+            <limit lower="-0.019" upper="0.010" effort="1" velocity="4.8" />
         </joint>
 
         <link name="left_finger_link">
             <visual>
                 <geometry>
-                <mesh filename="package://a6x_description/meshes/visual/left_finger_link.STL" />
+                    <mesh filename="package://a6x_description/meshes/visual/left_finger_link.STL" />
                 </geometry>
                 <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
                 <material name="grey" />
             </visual>
             <collision>
                 <geometry>
-                <mesh filename="package://a6x_description/meshes/visual/left_finger_link.STL" />
+                    <mesh filename="package://a6x_description/meshes/visual/left_finger_link.STL" />
                 </geometry>
                 <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
             </collision>
@@ -262,18 +262,18 @@
         <link name="right_finger_link">
             <visual>
                 <geometry>
-                <mesh filename="package://a6x_description/meshes/visual/right_finger_link.STL" />
+                    <mesh filename="package://a6x_description/meshes/visual/right_finger_link.STL" />
                 </geometry>
                 <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
                 <material name="grey" />
             </visual>
             <collision>
                 <geometry>
-                <mesh filename="package://a6x_description/meshes/visual/right_finger_link.STL" />
+                    <mesh filename="package://a6x_description/meshes/visual/right_finger_link.STL" />
                 </geometry>
                 <origin xyz="0.000 0.000 0.000" rpy="0.000 0.000 0.000" />
             </collision>
-                    <inertial>
+                <inertial>
                 <mass value="0.111661" />
                 <origin xyz="0.036898 -0.012549 -0.016201" rpy="0 0 0" />
                 <inertia ixx="0.000028" ixy="-0.000012" ixz="0.000000" 
@@ -281,7 +281,7 @@
                         izz="0.000065" />
             </inertial>
         </link>
-            
+
         <joint name="end_effector_fixed_joint" type="fixed">
             <parent link="palm_link" />
             <child link="end_effector_link" />
